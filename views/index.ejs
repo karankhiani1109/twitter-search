@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>Twitter Search</title>
+	 	 <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	  	  <style>
+	     .horizontal-navi{box-shadow: 0 6px 8px -6px #e3e3e3;width: 102.5%;background-color: #ffffff;}
+	      .horizontal-navi > ul > li > img{    margin-left: 130px;}
+	     .box{background-color: #ffffff;width: 95%;min-height: 200px;padding-right: 0%;padding: 15px;}
+	      .box .heading1{margin-left: -75px;padding-top: 2px;}
+	      h6{margin-bottom: 0px}
+	      h8{font-size:12px;}
+	      .box img{width: 40%;border-radius: 75px;}
+	      .box p{color: #9e9e9e;font-size: 13px;padding: 20px;padding-top: 0px;padding-bottom: 0px;}
+	      .box button{    padding-left: 15px;padding-right:15px;width: 120px;}
+	      .box:hover{box-shadow: 0 6px 8px 4px #e3e3e3;cursor:pointer;}
+	      .box:hover .heading1{color : #1dabdd}
+	      .containers{padding: 5%;padding-left: 6%;padding-right: 0%;}
+	      .containers h6{color: black; }
+	      .sbutton{    color: white;background-color: #1dabdd;border: none;padding: 4px;width: 70px;}
+	      .sinput{background: url(search.png) no-repeat scroll 7px 7px;padding-left:30px;border: 1px solid black;    border: 1px solid black;width: 280px;}
+	      .p{}
+	      </style>
+</head>
+
+<body style="background-color:rgba(128, 128, 128, 0.22);">
+	<nav class="navbar navbar-expand-sm  navbar-light horizontal-navi">
+      <div class="container-fluid">
+      <center>
+      <ul class="navbar-nav" style="margin-left:130px">
+        <li class="nav-item active" style="padding-left: 3%;padding-top: 10px;">
+
+          <img class="one" src="ts.png" style="width:50%">
+        </li>
+        <form method="post" style="margin-top:5px;">
+       <input type="text" name="search" class="sinput">
+       <input type="submit" value="Search" class="sbutton">
+       </form>
+      </ul>
+      </center>
+        </div>
+  </nav>
+  <center>
+  <%if (title.length < 1) { %>
+  <br><br>
+  	<h4>No Tweet found for "<%= searched %>"</h4>
+  <% } %>
+  </center>
+   <div class="container containers">
+    <!-- ROW NO 1 -->
+    <div class="row">
+
+      <% for(var i=0; i < title.length; i++) { %>
+      <div class="col-md-4" style="padding-bottom:10px;">
+        <div class="box">
+          <div class="row">
+            <div class="col">
+              <img src="<%- title[i].user.profile_image_url %>">
+            </div>
+            <div class="col heading1">
+              <h6><%= title[i].user.name %></h6>
+               
+              <h8>@<%= title[i].user.screen_name %></h8>
+              
+            </div>
+            <div class="col-4" style="font-size:12px;">
+
+            <%= title[i].created_at.substring(0,10) %>
+            </div>
+           
+          </div><br>
+          
+            <p ><%= title[i].text %></p>
+          
+         	<img src="retweet.svg" style="    width: 8%;padding: 2px;"><span  id="retweet<%= i %>"></span>
+         	<img src="comment.svg" style="    width: 8%;padding: 2px;"><span  id="comment<%= i %>">2.2k</span>
+         	
+        </div>  
+      </div>
+
+
+
+<script>
+	var num= <%= title[i].retweet_count %> ;
+	var x=document.getElementById("retweet<%= i %>");
+		console.log(num);
+	x.innerHTML=Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+    
+
+</script>
+  <% } %>  
+</div>
+</div>
+
+</body>
+</html>
